@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuejian.system.mapper.SUserMapper" >
+  <resultMap id="BaseResultMap" type="com.xuejian.system.pojo.SUser" >
+    <constructor >
+      <idArg column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PASSWORD" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USERNAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EMAIL, PASSWORD, USERNAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from S_USER
+    where EMAIL = #{email,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from S_USER
+    where EMAIL = #{email,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xuejian.system.pojo.SUser" >
+    insert into S_USER (EMAIL, PASSWORD, USERNAME
+      )
+    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuejian.system.pojo.SUser" >
+    insert into S_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuejian.system.pojo.SUser" >
+    update S_USER
+    <set >
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EMAIL = #{email,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuejian.system.pojo.SUser" >
+    update S_USER
+    set PASSWORD = #{password,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR}
+    where EMAIL = #{email,jdbcType=VARCHAR}
+  </update>
+</mapper>
