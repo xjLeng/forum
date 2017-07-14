@@ -1,5 +1,4 @@
 function login() {
-    alert(1);
     var email = $("#email").val();
     var password = $("#password").val();
     var data = {"email": email, "password": password};

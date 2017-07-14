@@ -1,9 +1,7 @@
 package com.xuejian.platform.controller;
 
-import com.xuejian.platform.util.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,7 @@ public class BaseController {
         if (StringUtils.isNotBlank(viewName)) {
             modelAndView = new ModelAndView(viewName);
         } else {
-            modelAndView = new ModelAndView("system/login");
+            modelAndView = new ModelAndView("/publicity/system/login.jsp");
         }
         return modelAndView;
     }
@@ -46,39 +44,26 @@ public class BaseController {
     }
 
     /**
-     * 获得请求参数（int）
+     * 获得请求参数（integer）
      *
      * @param request  请求对象
      * @param name     参数名称
      * @param defValue 默认值
-     * @return 请求参数（int）
+     * @return 请求参数（integer）
      */
     protected Integer getParameterInt(HttpServletRequest request, String name, int defValue) {
         return request.getParameter(name) != null ? Integer.parseInt(request.getParameter(name)) : defValue;
     }
 
     /**
-     * 获得请求参数（int）
+     * 获得请求参数（integer）
      *
      * @param request 请求对象
      * @param name    参数名称
-     * @return 请求参数（int）
+     * @return 请求参数（integer）
      */
     protected Integer getParameterInt(HttpServletRequest request, String name) {
         return request.getParameter(name) != null ? Integer.parseInt(request.getParameter(name)) : null;
-    }
-
-    private String toJsonStr(Object obj) {
-        return JSONUtils.toJSONString(obj);
-    }
-
-    public void returnJson(HttpServletResponse response, Object obj) {
-        if (!(obj instanceof Boolean) && !(obj instanceof Character) && !(obj instanceof Short) && !(obj instanceof Integer) && !(obj instanceof Long) && !(obj instanceof Float) && !(obj instanceof Double) && !(obj instanceof Byte) && !(obj instanceof String)) {
-            this.writerJsonStr(response, obj);
-        } else {
-            this.printWriter(response, obj);
-        }
-
     }
 
     public void writerJsonStr4Case(HttpServletResponse response, Object obj, boolean islower) {
@@ -86,7 +71,7 @@ public class BaseController {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            String e = this.toJsonStr(obj);
+            String e = JSON.toJSONString(obj);
             e = islower ? e.toLowerCase() : e.toUpperCase();
             response.getWriter().print(e);
         } catch (IOException var5) {
@@ -100,7 +85,7 @@ public class BaseController {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            response.getWriter().print(this.toJsonStr(obj));
+            response.getWriter().print(JSON.toJSONString(obj));
         } catch (IOException var4) {
             var4.printStackTrace();
         }

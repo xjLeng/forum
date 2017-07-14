@@ -58,18 +58,18 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>system/login.htm</welcome-file>
+        <welcome-file>publicity/system/login.jsp</welcome-file>
     </welcome-file-list>
     <!-- 配置404和500错误的自定义页面  -->
-    <!--<error-page>
+    <error-page>
         <error-code>404</error-code>
-        <location>/platform/Hplus-v.4.1.0/404.html</location>
+        <location>/publicity/system/404.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/platform/Hplus-v.4.1.0/500.html</location>
-    </error-page>-->
+        <location>/publicity/system/500.jsp</location>
+    </error-page>
 
     <!-- 配置SESSION超时，单位是分钟 -->
     <session-config>

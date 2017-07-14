@@ -12,7 +12,13 @@ public class SUserServiceImpl implements ISUserService {
     @Autowired
     private SUserMapper sUserMapper;
 
-    public SUser login(SUser sUser) {
+    /**
+     * 用户登录
+     *
+     * @param sUser 登录信息
+     * @return 数据库对应的用户信息
+     */
+    public SUser login(final SUser sUser) {
         return sUserMapper.selectByPrimaryKey(sUser.getEmail());
     }
 }
