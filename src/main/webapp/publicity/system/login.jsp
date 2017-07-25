@@ -14,14 +14,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>H+ 后台主题UI框架 - 登录</title>
-
-    <link href="${basePath }/platform/Hplus-v.4.1.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${basePath }/platform/Hplus-v.4.1.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${basePath }/platform/Hplus-v.4.1.0/css/animate.css" rel="stylesheet">
-    <link href="${basePath }/platform/Hplus-v.4.1.0/css/style.css" rel="stylesheet">
-    <link href="${basePath }/platform/Hplus-v.4.1.0/css/login.css" rel="stylesheet">
-    <link href="${basePath }/platform/layui/css/layui.css" rel="stylesheet">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="${basePath }/resuorce/css/system/styles.css">
+    <link rel="stylesheet" href="${basePath }/platform/layui/css/layui.css" media="all">
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
@@ -33,53 +28,57 @@
 
 </head>
 
-<body class="signin">
-<div class="signinpanel">
-    <div class="row">
-        <div class="col-sm-7">
-            <div class="signin-info">
-                <div class="logopanel m-b">
-                    <h1>[ H+ ]</h1>
-                </div>
-                <div class="m-b"></div>
-                <h4>欢迎使用 <strong>H+ 后台主题UI框架</strong></h4>
-                <ul class="m-b">
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势三</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势四</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五</li>
-                </ul>
-                <strong>还没有账号？ <a href="#">立即注册&raquo;</a></strong>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <form class="layui-form" action="index.html">
-                <h4 class="no-margins">登录：</h4>
-                <p class="m-t-md">登录到H+后台主题UI框架</p>
-                <input type="text" class="form-control uname" required lay-verify="required" placeholder="用户名"/>
-                <input type="password" class="form-control pword m-b" placeholder="密码"/>
-                <a href="">忘记密码了？</a>
-                <button class="btn btn-success btn-block" lay-submit lay-filter="formDemo">登录</button>
+<body>
+<div class="htmleaf-container">
+    <div class="wrapper">
+        <div class="container">
+            <h1>Welcome</h1>
+
+            <form class="layui-form form">
+                <input type="text" name="email" lay-verify="username" placeholder="邮箱">
+                <input type="password" name="password" lay-verify="password" placeholder="密码">
+                <button lay-submit lay-filter="login">登录</button>
             </form>
-        </div>
-    </div>
-    <div class="signup-footer">
-        <div class="pull-left">
-            &copy; 2015 All Rights Reserved. H+
         </div>
     </div>
 </div>
 </body>
-<script src="${basePath }/platform/layui/layui.js?t=1498856285724" charset="utf-8"></script>
+<script src="${basePath }/platform/layui/layui.js" charset="utf-8"></script>
+
 <script>
-    //Demo
-    layui.use('form', function () {
-        var form = layui.form();
+    layui.config({
+        base: '${basePath }/platform/layuiExtend/' //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+    });
+
+    layui.use(['form', 'layedit', 'laydate', 'ajax'], function () {
+        var form = layui.form(),
+            layer = layui.layer,
+            ajax = layui.ajax;
+
+        //自定义验证规则
+        form.verify({
+            username: function (value) {
+                if (!value) {
+                    return '请输入用户名';
+                }
+            }
+            , password: function (value) {
+                if (!value) {
+                    return '请输入密码';
+                }
+            }
+        });
 
         //监听提交
-        form.on('submit(formDemo)', function (data) {
-            layer.msg(JSON.stringify(data.field));
+        form.on('submit(login)', function (data) {
+            layer.alert(JSON.stringify(data.field))
+            ajax.axs("${basePath }/system/login.do", JSON.stringify(data.field), function (rs) {
+                if (rs.success) {
+
+                } else {
+                    layer.msg(rs.msg)
+                }
+            });
             return false;
         });
     });

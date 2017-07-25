@@ -78,7 +78,7 @@
     });
 </script>
 
-<script src="${basePath}/resuorce/js/common/commonality.js" charset="UTF-8" defer="defer"></script>
+<script src="${basePath}/platform/js/commonality.js" charset="UTF-8" defer="defer"></script>
 <script src="${basePath}/resuorce/js/system/register.js" charset="UTF-8" defer="defer"></script>
 </body>
 
