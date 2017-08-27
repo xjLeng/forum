@@ -126,6 +126,7 @@ public class DefaultHtmlComponentBuilder implements HtmlComponentBuilder, Resour
 
 	private Document read(String fileName) throws MalformedURLException, DocumentException {
 		SAXReader reader = new SAXReader();
+		//加上这句
 		reader.setEntityResolver(entityResolver);
 		Document document = reader.read(new File(fileName));
 		return document;
